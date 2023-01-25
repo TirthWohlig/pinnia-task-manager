@@ -6,14 +6,14 @@
       <h1>{{ taskStore.name }}</h1>
     </header>
     <!-- Task -->
-    <div class="task-list">
+    <div class="task-list" v-if="filter === 'all'">
       <p>Tasks</p>
-      <div v-for="task in taskStore.tasks">
+      <div v-for="task in taskStore.task">
         <TaskDetails :task="task" />
       </div>
     </div>
     <!--  -->
-    <div class="task-list">
+    <div class="task-list" v-if="filter === 'favs'">
       <p>Fav Tasks</p>
       <div v-for="task in taskStore.favs">
         <TaskDetails :task="task" />
@@ -22,6 +22,7 @@
   </main>
 </template>
 <script>
+import { ref } from "vue"
 import TaskDetails from "./components/TaskDetails.vue"
 import { UseTaskStore } from "./stores/TaskStore.js"
 export default {
@@ -31,7 +32,9 @@ export default {
   setup() {
     const taskStore = UseTaskStore()
 
-    return { taskStore }
+    const filter = ref('all')
+
+    return { taskStore, filter }
   }
 }
 </script>
